@@ -1,4 +1,4 @@
-# PAD Transcoder
+# Hydra Transcode
 
 A distributed video transcoding system with orchestrator, agents, and web frontend.
 
@@ -28,7 +28,7 @@ A distributed video transcoding system with orchestrator, agents, and web fronte
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd pad-transcoder
+cd hydratranscode
 ```
 
 2. Start all services:
@@ -45,7 +45,7 @@ docker-compose up --build
 
 1. Copy a test video to the shared storage:
 ```bash
-docker cp sample.mp4 pad-transcoder_agent-1_1:/storage/
+docker cp sample.mp4 hydratranscode_agent-1_1:/storage/
 ```
 
 2. Create a test task via the UI or API:
@@ -68,7 +68,7 @@ curl -X POST http://localhost:8000/api/tasks \
 
 ### Project Structure
 ```
-pad-transcoder/
+hydratranscode
 ├── orchestrator/          # FastAPI backend
 ├── agent/                 # Transcoding workers
 ├── frontend/             # React dashboard

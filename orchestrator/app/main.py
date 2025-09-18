@@ -20,7 +20,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # Initialize FastAPI app
-app = FastAPI(title="PAD Transcoder Orchestrator", version="1.0.0")
+app = FastAPI(title="Hydra Transcode Orchestrator", version="1.0.0")
 
 # Configure CORS
 app.add_middleware(
@@ -49,7 +49,7 @@ async def startup_event():
 
 @app.get("/")
 async def root():
-    return {"message": "PAD Transcoder Orchestrator API", "version": "1.0.0"}
+    return {"message": "Hydra Transcode Orchestrator API", "version": "1.0.0"}
 
 @app.get("/api/agents")
 async def get_agents():

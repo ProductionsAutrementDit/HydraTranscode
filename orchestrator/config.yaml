@@ -1,4 +1,4 @@
-# PAD Transcoder Orchestrator Configuration
+# Hydra Transcode Orchestrator Configuration
 agents:
   - id: "agent-001"
     host: "agent-1"
