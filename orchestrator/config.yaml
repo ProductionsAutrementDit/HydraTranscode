@@ -1,0 +1,40 @@
+# PAD Transcoder Orchestrator Configuration
+agents:
+  - id: "agent-001"
+    host: "agent-1"
+    port: 8001
+    storage_mappings:
+      shared: "/storage"
+
+  - id: "agent-002"
+    host: "agent-2"
+    port: 8002
+    storage_mappings:
+      shared: "/storage"
+
+  - id: "agent-003"
+    host: "agent-3"
+    port: 8003
+    storage_mappings:
+      shared: "/storage"
+
+# Storage definitions
+storage:
+  shared:
+    type: "local"
+    path: "/storage"
+    description: "Shared storage for all agents"
+
+# Task settings
+tasks:
+  max_retries: 0  # No automatic retries
+  heartbeat_interval: 30  # seconds
+  progress_update_interval: 1  # seconds
+
+# Logging
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "/logs/orchestrator.log"
+  max_size: 10485760  # 10MB
+  backup_count: 5

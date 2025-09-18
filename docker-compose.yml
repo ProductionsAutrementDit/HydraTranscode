@@ -1,0 +1,93 @@
+version: '3.8'
+
+services:
+  orchestrator:
+    build: ./orchestrator
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./orchestrator:/app
+      - ./shared/storage:/storage
+      - orchestrator-db:/data
+      - orchestrator-logs:/logs
+    environment:
+      - DATABASE_URL=sqlite:///./orchestrator.db
+      - LOG_FILE=/logs/orchestrator.log
+      - LOG_MAX_SIZE=10485760
+      - LOG_BACKUP_COUNT=5
+    networks:
+      - transcoder-net
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:8000
+      - VITE_WS_URL=ws://localhost:8000
+    networks:
+      - transcoder-net
+    depends_on:
+      - orchestrator
+
+  agent-1:
+    build: ./agent
+    volumes:
+      - ./agent:/app
+      - ./shared/storage:/storage
+      - agent-1-state:/state
+    environment:
+      - AGENT_ID=agent-001
+      - ORCHESTRATOR_URL=ws://orchestrator:8000/ws/agent
+      - STATE_DIR=/state
+      - STORAGE_MAP={"shared":"/storage"}
+    networks:
+      - transcoder-net
+    depends_on:
+      - orchestrator
+
+  agent-2:
+    build: ./agent
+    volumes:
+      - ./agent:/app
+      - ./shared/storage:/storage
+      - agent-2-state:/state
+    environment:
+      - AGENT_ID=agent-002
+      - ORCHESTRATOR_URL=ws://orchestrator:8000/ws/agent
+      - STATE_DIR=/state
+      - STORAGE_MAP={"shared":"/storage"}
+    networks:
+      - transcoder-net
+    depends_on:
+      - orchestrator
+
+  agent-3:
+    build: ./agent
+    volumes:
+      - ./agent:/app
+      - ./shared/storage:/storage
+      - agent-3-state:/state
+    environment:
+      - AGENT_ID=agent-003
+      - ORCHESTRATOR_URL=ws://orchestrator:8000/ws/agent
+      - STATE_DIR=/state
+      - STORAGE_MAP={"shared":"/storage"}
+    networks:
+      - transcoder-net
+    depends_on:
+      - orchestrator
+
+volumes:
+  orchestrator-db:
+  orchestrator-logs:
+  agent-1-state:
+  agent-2-state:
+  agent-3-state:
+
+networks:
+  transcoder-net:
+    driver: bridge

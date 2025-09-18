@@ -1,0 +1,5 @@
+websockets==12.0
+aiohttp==3.9.1
+pydantic==2.5.0
+python-json-logger==2.0.7
+ffmpeg-python==0.2.0
